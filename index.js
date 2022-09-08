@@ -6,7 +6,7 @@ const express = require('express')
 const app = express();
 const { Client, LocalAuth } = require('./ano');
 const client = new Client({
-	puppeteer: { headless: true, args: ['--no-sandbox'] },
+	puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] },
 	authStrategy: new LocalAuth({
 		clientId: "client-887913"
 	})
