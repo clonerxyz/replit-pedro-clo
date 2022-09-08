@@ -158,3 +158,13 @@ buat cek pesan masuk untuk monitoring tinggal localhost:3111
 ### Tutorial video
 
 - [live deploy dengan bimbingan YME ](https://youtu.be/iHRAd7-aEKA)
+
+
+ [![clonerxyz](https://github.com/clonerxyz.png?size=100)](https://github.com/clonerxyz) | [![fadil](https://github.com/fdll14.png?size=100)](https://github.com/fdll14) | [![VilosmZX](https://github.com/VilosmZX.png?size=100)](https://github.com/VilosmZX)
+
+
+
+
+
+
+
