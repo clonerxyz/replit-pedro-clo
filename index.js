@@ -1,6 +1,5 @@
 const fs = require('fs');
 const qrcode = require('qrcode-terminal');
-const str_replace = require('str_replace');
 const path = require('path');
 const qrimg = require('qrcode');
 const express = require('express')
