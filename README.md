@@ -157,4 +157,4 @@ buat cek pesan masuk untuk monitoring tinggal localhost:3111
 
 ### Tutorial video
 
-- [live deploy dengan bimbingan mas clonerxyz](https://youtu.be/iHRAd7-aEKA)
+- [live deploy dengan bimbingan YME ](https://youtu.be/iHRAd7-aEKA)
