@@ -11,6 +11,7 @@ const { Server } = require('socket.io');
 const io = new Server(socket);
 const { handleSocket } = require('./socket');
 const { storeChatLog } = require('./db');
+require('dotenv').config();
 
 const client = new Client({
 	puppeteer: { executablePath: '/usr/bin/chromium',headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] },
@@ -70,18 +71,24 @@ client.on('message', async msg => {
 
 	const chat = await msg.getChat();
 	const contact = await msg.getContact();
-	const command = msg.body.substring(1).split(' ')[0];
-  const params = msg.body.split(' ').filter((param) => !param.startsWith('/'));
-
+	
 	if (chat.isGroup) {
 		await storeChatLog(msg, io);
 	}
+	
+	// Prefix
+	if (msg.startsWith(process.env.PREFIX | '!')) {
+		const command = msg.body.substring(1).split(' ')[0];
+		const params = msg.body.split(' ').filter((param) => !param.startsWith('/'));
+		
+		if (command === 'ping') {
+			await chat.sendMessage(`Pong ${contact.number}!`, {
+				mentions: [contact]
+			});
+		};
 
-	if (command === 'ping') {
-		await chat.sendMessage(`Pong ${contact.number}!`, {
-			mentions: [contact]
-		})
-	} 
+	};
+	
 	// Create your own command here
 });
 
@@ -113,6 +120,7 @@ client.on('message_ack', (msg, ack) => {
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+
 const port = process.env.PORT || 3111;
 
 (async () => {
