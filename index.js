@@ -3,8 +3,16 @@ const qrcode = require('qrcode-terminal');
 const path = require('path');
 const qrimg = require('qrcode');
 const express = require('express')
-const app = express();
+const http = require('http');
+const app = express(); 
+const socket = http.createServer(app);
 const { Client, LocalAuth } = require('./ano');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+const { Server } = require('socket.io');
+const io = new Server(socket);
+const { handleSocket } = require('./socket');
+
 const client = new Client({
 	puppeteer: { executablePath: '/usr/bin/chromium',headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] },
 	authStrategy: new LocalAuth({
@@ -73,12 +81,17 @@ client.on('qr', (qr) => {
 	  app.get('/qrimg/', (req, res) => {
 		res.sendFile(__dirname + '/ano.png');
 		});
-		
-		app.get('/', (req, res) => {
-		res.sendFile(__dirname + '/log.txt');
-		});
+
     console.log('QR RECEIVED', qr);
 	});
+
+client.on('ready', () => {
+	handleSocket(io);
+	app.get('/chatlog', (req, res) => {
+		res.render('chatlog');
+	});
+})
+
 client.on('authenticated', (session) => {
     console.log('AUTHENTICATED', session);
 });
@@ -87,19 +100,30 @@ client.on('auth_failure', msg => {
     console.log('AUTHENTICATION FAILURE', msg);
 });
 
-client.on('ready', () => {
-    console.log('READY');
-});
 
 client.initialize();
 client.on('message', async msg => {
-	const fs = require('fs');
+
 	const chat = await msg.getChat();
 	const contact = await msg.getContact();
-	fs.appendFile('log.txt', `${contact.number?.slice(5)} ${contact?.pushname,msg.body}\n`, function (err) {
-		if (err) throw err;
-		//console.log('Saved!');
-	  });
+	
+	if (chat.isGroup) {
+		const data = {
+			author: (await msg.getContact()),
+			msg: msg.body,
+			chat: (await msg.getChat()).name
+		};
+		await prisma.chatLog.create({
+			data: {
+				name: data.author?.pushname,
+				msg: data.msg,
+				number: data.author?.number,
+				group: data.chat,
+			}
+		});
+		io.sockets.emit('new_msg', data);
+	}
+
 	console.log("["+contact.number?.slice(5),contact?.pushname,msg.body+"]\n");
 	if (msg.body === '1') {
 		const chat = await msg.getChat();
@@ -156,8 +180,10 @@ client.on('message_ack', (msg, ack) => {
     }
 	
 });
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 const port = process.env.PORT || 3111
-app.listen(port, () => {
+socket.listen(port, () => {
 console.log(`Example app listening at http://localhost:${port}`)
 })
 
