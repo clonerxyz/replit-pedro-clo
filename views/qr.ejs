@@ -1,0 +1,73 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css"
+  />
+  <style>
+    body {
+      margin: 20px auto;
+      font-family: "Lato";
+      font-weight: 300;
+      width: 600px;
+      text-align: center;
+    }
+
+    button {
+      background: cornflowerblue;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: "Lato";
+      margin: 5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      outline: none;
+    }
+
+    button:hover {
+      background: orange;
+    }
+  </style>
+</head>
+<body>
+  <button
+    style="
+      font-family: Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva,
+        Verdana, sans-serif;
+      font-weight: 900;
+      background-color: #ed5c75;
+      color: #000;
+    "
+    class="btn btn-lg btn-block"
+    type="button"
+    disabled
+  >
+    <span
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    Loading qr...
+  </button>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    //setTimeout(function() {
+    setTimeout(function swals() {
+      $(".loader").hide();
+      swal({
+        title: "scan qr ini dalam waktu 1 menit",
+        imageUrl: "/qrimg",
+      }).then(function () {
+        window.location = "/";
+      });
+    }, 5000);
+    //}
+  </script>
+  <body onload="swals()"></body>
+</body>
