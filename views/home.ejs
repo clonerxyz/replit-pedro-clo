@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+  <div class="container">
+    <div class="inner__container">
+      <div class="button__container">
+        <button onclick="navigate('/chatlog')">Monitor</button>
+      </div>
+      <div class="info__container">
+        <span>Total Group: <%= chatCount %></span>
+        <span>Total Contact: <%= contactCount %></span>
+        <span>Status <span style="color: green;"><%= status %></span></span>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  function navigate(location) {
+    window.location.href = location;
+  }
+</script>
+</html>
