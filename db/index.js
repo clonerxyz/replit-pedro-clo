@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-async function storeChatLog(msg) {
+async function storeChatLog(msg, io) {
   const data = {
     author: (await msg.getContact()),
     msg: msg.body,
