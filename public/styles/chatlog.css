@@ -1,0 +1,67 @@
+.chatlog__container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  background: #FFF;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  padding-right: 2rem;
+  gap: 2rem;
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.msg {
+  background: #EEE;
+  padding: 1rem;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.info__container {
+  position: absolute;
+  top: 10%;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  background: #FFF;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hideInfo {
+  display: none;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background: #EEE;
+}
+
+.button__container {
+  position: absolute;
+  bottom: 0;
+  right: 2.5rem;
+}
+
+.button {
+  border: none;
+  outline: none;
+  background: #FFF;
+  border: #EEE 1px solid;
+  padding: 0.5rem;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  transition: 0.3s ease;
+}
+
+.button:hover {
+  border: rgb(111, 199, 231) 1px solid;
+  transition: 0.3 ease;
+}
