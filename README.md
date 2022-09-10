@@ -9,9 +9,15 @@
 > NOTE : Incase not 100 % safe and for sure use its just for testing only
 
 ### First of all
-```$ npx prisma init --datasource-provider sqlite```
-```$ npx prisma generate ```
-```$ npx prisma migrate dev --name dev```
+```
+$ npx prisma init --datasource-provider sqlite
+```
+```
+$ npx prisma generate
+```
+```
+$ npx prisma migrate dev --name dev
+```
 
 
 ### Cara deploy di Replit
