@@ -74,7 +74,7 @@ client.on('message', async msg => {
   const params = msg.body.split(' ').filter((param) => !param.startsWith('/'));
 
 	if (chat.isGroup) {
-		await storeChatLog(msg);
+		await storeChatLog(msg, io);
 	}
 
 	if (command === 'ping') {
