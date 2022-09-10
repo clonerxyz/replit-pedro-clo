@@ -19,6 +19,8 @@ $ npx prisma generate
 $ npx prisma migrate dev --name dev
 ```
 
+### Real Time Chat Log
+![gambar](https://i.ibb.co/X8qm5s8/Arco-Linux-2022-09-10-19-38-54.png)
 
 ### Cara deploy di Replit
 
