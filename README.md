@@ -8,16 +8,6 @@
 
 > NOTE : Incase not 100 % safe and for sure use its just for testing only
 
-### First of all
-```
-$ npx prisma init --datasource-provider sqlite
-```
-```
-$ npx prisma generate
-```
-```
-$ npx prisma migrate dev --name dev
-```
 
 ### Real Time Chat Log
 ![gambar](https://i.ibb.co/X8qm5s8/Arco-Linux-2022-09-10-19-38-54.png)
@@ -140,6 +130,17 @@ kalo sudah kalian buka shell yang baru terus masuk folder `replit-pedro-clo`
 
 ```
 cd replit-pedro-clo
+```
+
+### Initialisasi Database
+```
+$ npx prisma init --datasource-provider sqlite
+```
+```
+$ npx prisma generate
+```
+```
+$ npx prisma migrate dev --name dev
 ```
 
 lalu jalankan perintah
