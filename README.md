@@ -165,7 +165,7 @@ tinggal scan aja tunggu sampai loading di wa hp selesai lalu klik button OK
 
 ![gambar](https://i.ibb.co/pP8vs6L/image.png)
 
-buat cek pesan masuk untuk monitoring tinggal localhost:3111
+buat cek pesan masuk untuk monitoring tinggal localhost:3111/chatlog
 
 ### Tutorial video
 
