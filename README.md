@@ -8,6 +8,12 @@
 
 > NOTE : Incase not 100 % safe and for sure use its just for testing only
 
+### Home page
+Jika belum scan qr
+![gambar](https://i.ibb.co/7zRWvSB/Screenshot-20220911163447.png")
+
+Jika sudah scan
+![gambar](https://i.ibb.co/PTvTmgg/Screenshot-20220911163422.png)
 
 ### Real Time Chat Log
 ![gambar](https://i.ibb.co/X8qm5s8/Arco-Linux-2022-09-10-19-38-54.png)
