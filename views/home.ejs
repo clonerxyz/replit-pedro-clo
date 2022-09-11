@@ -11,12 +11,16 @@
   <div class="container">
     <div class="inner__container">
       <div class="button__container">
-        <button onclick="navigate('/chatlog')">Monitor</button>
+        <% if (status === 'Offline') { %>
+          <button onclick="navigate('/qr')">Scan QR</button>
+        <% } else { %>
+          <button onclick="navigate('/chatlog')">Monitor</button>
+        <% } %>
       </div>
       <div class="info__container">
         <span>Total Group: <%= chatCount %></span>
         <span>Total Contact: <%= contactCount %></span>
-        <span>Status <span style="color: green;"><%= status %></span></span>
+        <span>Status <% if (status === 'Offline') { %><span style="color: red;"><%= status %></span><% } else { %><span style="color: green;"><%= status %><% } %></span></span>
       </div>
     </div>
   </div>
