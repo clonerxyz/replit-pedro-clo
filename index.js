@@ -12,6 +12,7 @@ const io = new Server(socket);
 const { handleSocket } = require('./socket');
 const { storeChatLog } = require('./db');
 const isAuthenticated = require('./middleware/auth');
+const printInfo = require('./utils/info');
 require('dotenv').config();
 
 const client = new Client({
@@ -25,7 +26,7 @@ client.on('qr', (qr) => {
 	io.sockets.emit('newqr');
 	client.ready = false;
 	app.get('/qr/', (req, res) => {
-		qrimg.toFile(path.resolve(__dirname, './', 'ano.png'), qr);
+		qrimg.toFile(path.resolve(__dirname, './img', 'qr.png'), qr);
 		//qrimg.toFile(path.resolve(__dirname, './public', 'ano.png'), qr);
 		res.set("Content-Type", "text/html");
 		//OR
@@ -34,19 +35,20 @@ client.on('qr', (qr) => {
   });
 	
 	app.get('/qrimg/', (req, res) => {
-			res.sendFile(__dirname + '/ano.png');
+			res.sendFile(__dirname + '/img/qr.png');
 	});
-
-  console.log('QR RECEIVED', qr);
 });
 
-client.on('ready', () => {
+client.on('ready', async () => {
 	client.ready = true;
+
 	handleSocket(io);
 
 	app.get('/chatlog', (req, res) => {
 		res.render('chatlog');
 	});
+
+	await printInfo(client);
 })
 
 client.on('authenticated', (session) => {
@@ -58,17 +60,17 @@ client.on('auth_failure', msg => {
 });
 
 
-client.on('message', async msg => {
+client.on('message_create', async msg => {
 
 	const chat = await msg.getChat();
 	const contact = await msg.getContact();
-	
+
 	if (chat.isGroup) {
 		await storeChatLog(msg, io);
 	}
-	
+
 	// Prefix
-	if (msg.startsWith(process.env.PREFIX | '!')) {
+	if (msg.body.startsWith(process.env.PREFIX | '!')) {
 		const command = msg.body.substring(1).split(' ')[0];
 		const params = msg.body.split(' ').filter((param) => !param.startsWith('/'));
 		
@@ -86,7 +88,7 @@ client.on('message', async msg => {
 	
 });
 
-client.on('message_create', async (msg) => {
+client.on('message', async (msg) => {
 //console.log('MESSAGE RECEIVED', msg);
     // Fired on all message creations, including your own
       if (msg.fromMe) {
