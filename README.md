@@ -10,9 +10,12 @@
 
 ### Home page
 Jika belum scan qr
+
 ![gambar](https://i.ibb.co/7zRWvSB/Screenshot-20220911163447.png")
 
+
 Jika sudah scan
+
 ![gambar](https://i.ibb.co/PTvTmgg/Screenshot-20220911163422.png)
 
 ### Real Time Chat Log
