@@ -22,6 +22,7 @@ const client = new Client({
 }); 
 
 client.on('qr', (qr) => {
+	io.sockets.emit('newqr');
 	client.ready = false;
 	app.get('/qr/', (req, res) => {
 		qrimg.toFile(path.resolve(__dirname, './', 'ano.png'), qr);
