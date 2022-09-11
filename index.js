@@ -11,6 +11,7 @@ const { Server } = require('socket.io');
 const io = new Server(socket);
 const { handleSocket } = require('./socket');
 const { storeChatLog } = require('./db');
+const isAuthenticated = require('./middleware/auth');
 require('dotenv').config();
 
 const client = new Client({
@@ -21,10 +22,7 @@ const client = new Client({
 }); 
 
 client.on('qr', (qr) => {
-	app.get('/', (req, res) => {
-		res.render('home', { status: 'Offline' });
-	});
-
+	client.ready = false;
 	app.get('/qr/', (req, res) => {
 		qrimg.toFile(path.resolve(__dirname, './', 'ano.png'), qr);
 		//qrimg.toFile(path.resolve(__dirname, './public', 'ano.png'), qr);
@@ -42,20 +40,12 @@ client.on('qr', (qr) => {
 });
 
 client.on('ready', () => {
+	client.ready = true;
 	handleSocket(io);
-	
+
 	app.get('/chatlog', (req, res) => {
 		res.render('chatlog');
 	});
-
-	app.get('/', async (req, res) => {
-		const context = {
-			chatCount: (await client.getChats()).length,
-			contactCount: (await client.getContacts()).length,
-			status: 'Online',
-		}
-		res.render('home', context);
-	})
 })
 
 client.on('authenticated', (session) => {
@@ -85,11 +75,14 @@ client.on('message', async msg => {
 			await chat.sendMessage(`Pong ${contact.number}!`, {
 				mentions: [contact]
 			});
-		};
+		} else if(command === 'echo'){
+			const message = params[0]; // Example: !echo Hello!
+			await chat.sendMessage(message);
+		}
+		// Create your own command here
 
 	};
 	
-	// Create your own command here
 });
 
 client.on('message_create', async (msg) => {
@@ -121,10 +114,19 @@ client.on('message_ack', (msg, ack) => {
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+app.get('/', isAuthenticated(client), (req, res) => {
+	const context = {
+		chatCount: 0,
+		contactCount: 0,
+		status: 'Offline',
+	}
+	res.render('home', context);
+});
+
 const port = process.env.PORT || 3111;
 
 (async () => {
-	await client.initialize();
+	client.initialize();
 	socket.listen(port, () => {
 		console.log(`Example app listening at http://localhost:${port}`)
 	});
